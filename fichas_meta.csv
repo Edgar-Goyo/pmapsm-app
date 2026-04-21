@@ -1,0 +1,52 @@
+FICHA,DESCRIPCION
+PMOOR-1,Inspección Preventiva
+PMOOR-2,Manejo y cambio de tuberia
+AS-1,Manejo y disposición de materiales sobrantes
+AS-2,Manejo de taludes
+AS-3,Manejo paisajístico
+AS-4,Manejo de materiales de construcción
+AS-5,Manejo de residuos líquidos
+AS-6,Manejo de escorrentía
+AS-7,Manejo de residuos sólidos y especiales
+AS-8: PMCOR-2,Conformación del derecho de vía
+AS-9,"Apertura de zanja, bajado y tapado"
+AS-10: PMCOR-18,Prueba Hidrostática
+AS-11: PMAAH-5,Manejo ambiental de afloramiento de agua
+ARH-1,Manejo de captación de agua
+ARH-2,Manejo de cruces de agua
+ARA-1,Manejo de fuentes de emisiones y ruido
+ARA-2,Manejo de radiación térmica y luminosidad
+ACA-1,Proyecto de recuperación del suelo
+ACA-2,Compensación del recurso hídrico
+BS-1,Manejo de cobertura vegetal y desacapote
+BS-2,Manejo de Flora
+BS-3,Manejo de la fauna
+BPCH-1,Manejo y conservación de hábitats
+BRAI-1,Revegetalización de áreas intervenidas
+BH-1,Manejo del recurso hídrico
+BCEVF-1,Conservación de especies vegetales y faunísticas
+BC-1,Compensación por afectación paisajística
+BC-2,Compensación de flora y fauna
+BC-3,Compensación por aprovechamiento de la cobertura vegetal
+GS-1,Información y comunicación a instituciones y comunidad
+GS-2,Coordinación interinstitucional
+GS-3,Educación socio ambiental - personal de la obra
+GS-4,Educación socio ambiental a la comunidad
+GS-5,Proyectos con la comunidad
+GS-6,Programa de compensación social
+PGSO1-8,Programa de apoyo a la gestión administrativa
+PSMA-1,Monitoreo de estabilidad
+ASM-1,Aguas residuales
+ASM-2,Suelos
+ASM-3,"Sistema de manejo, tratamiento y disposición de residuos sólidos"
+ASM-4,Captación en aguas superficiales y subterráneas
+ASM-5,"Calidad del aire, emisiones atmosféricas y ruido"
+ASM-6,Seguimiento al mantenimiento de vías
+PM-1,Programa de monitoreos
+BSM-1,Seguimiento a la Flora y fauna
+BSM-2,Recurso hidrobiologico
+BSM-3,Programa de revegetalización
+SSM-1,Manejo de los impactos sociales del proyecto
+SSM-2,Seguimiento a los programas de apoyo a la gestión comunitaria y coordinación interinstitucional
+SSM-3,Seguimiento a los programas de educación ambiental a trabajadores
+SSM-4,"Seguimiento a atención de inquietudes, solicitudes y reclamos"
