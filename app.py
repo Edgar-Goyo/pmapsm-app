@@ -30,6 +30,29 @@ st.markdown("""
   [data-testid="stSidebar"] .stSelectbox label,
   [data-testid="stSidebar"] .stRadio label { color: #b8dfc8 !important; font-weight: 500; }
 
+  /* ── SELECTBOX sidebar: fondo verde, texto blanco fijo ── */
+  [data-testid="stSidebar"] div[data-baseweb="select"] > div:first-child {
+    background-color: #1a5c38 !important;
+  }
+  [data-testid="stSidebar"] div[data-baseweb="select"] span,
+  [data-testid="stSidebar"] div[data-baseweb="select"] div,
+  [data-testid="stSidebar"] div[data-baseweb="select"] input,
+  [data-testid="stSidebar"] [data-baseweb="select"] [class*="placeholder"],
+  [data-testid="stSidebar"] [data-baseweb="select"] [class*="singleValue"] {
+    color: #ffffff !important;
+  }
+  [data-testid="stSidebar"] [data-baseweb="popover"] *,
+  [data-testid="stSidebar"] [data-baseweb="menu"] li,
+  [data-testid="stSidebar"] [data-baseweb="option"] {
+    background-color: #0d3b26 !important;
+    color: #ffffff !important;
+  }
+  [data-testid="stSidebar"] [data-baseweb="option"]:hover,
+  [data-testid="stSidebar"] [aria-selected="true"] {
+    background-color: #1a7a4a !important;
+    color: #ffffff !important;
+  }
+
   /* Top header bar */
   .header-bar {
     background: linear-gradient(90deg, #0d3b26, #1a7a4a);
