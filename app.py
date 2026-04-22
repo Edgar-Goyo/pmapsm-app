@@ -6,6 +6,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from io import BytesIO
 import datetime
+from pathlib import Path
 
 # ─── PAGE CONFIG ────────────────────────────────────────────────────────────
 st.set_page_config(
@@ -22,7 +23,6 @@ st.markdown("""
 
   html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 
-  /* Sidebar */
   [data-testid="stSidebar"] {
     background: linear-gradient(180deg, #0d3b26 0%, #145c38 60%, #1a7a4a 100%);
   }
@@ -30,7 +30,6 @@ st.markdown("""
   [data-testid="stSidebar"] .stSelectbox label,
   [data-testid="stSidebar"] .stRadio label { color: #b8dfc8 !important; font-weight: 500; }
 
-  /* ── SELECTBOX sidebar: fondo verde, texto blanco fijo ── */
   [data-testid="stSidebar"] div[data-baseweb="select"] > div:first-child {
     background-color: #1a5c38 !important;
   }
@@ -53,7 +52,6 @@ st.markdown("""
     color: #ffffff !important;
   }
 
-  /* Top header bar */
   .header-bar {
     background: linear-gradient(90deg, #0d3b26, #1a7a4a);
     padding: 18px 28px;
@@ -66,7 +64,6 @@ st.markdown("""
   .header-bar h1 { color: white; margin: 0; font-size: 1.6rem; font-weight: 700; }
   .header-bar p  { color: #b8dfc8; margin: 0; font-size: 0.85rem; }
 
-  /* Metric cards */
   .metric-card {
     background: white;
     border: 1px solid #e2e8f0;
@@ -78,7 +75,6 @@ st.markdown("""
   .metric-card .number { font-size: 2.2rem; font-weight: 700; color: #0d3b26; }
   .metric-card .label  { font-size: 0.78rem; color: #64748b; margin-top: 4px; text-transform: uppercase; letter-spacing: .05em; }
 
-  /* Result card */
   .result-card {
     background: white;
     border: 1px solid #e2e8f0;
@@ -124,7 +120,6 @@ st.markdown("""
     margin: 2px 3px 2px 0;
   }
 
-  /* Search box style */
   .stTextInput input {
     border-radius: 8px !important;
     border: 2px solid #1a7a4a !important;
@@ -132,7 +127,6 @@ st.markdown("""
     padding: 10px 14px !important;
   }
 
-  /* Section headers */
   .section-title {
     font-size: 1rem;
     font-weight: 700;
@@ -142,7 +136,6 @@ st.markdown("""
     margin: 20px 0 14px;
   }
 
-  /* Hide streamlit default footer/menu */
   #MainMenu { visibility: hidden; }
   footer { visibility: hidden; }
 </style>
@@ -154,7 +147,6 @@ def load_data():
     odl = pd.read_csv("data_odl_clean.csv")
     obc = pd.read_csv("data_obc_clean.csv")
     meta = pd.read_csv("fichas_meta.csv")
-
     for df in [odl, obc]:
         df['FICHAS_APLICAN'] = df['FICHAS_APLICAN'].apply(
             lambda x: ast.literal_eval(x) if isinstance(x, str) and x.startswith('[') else []
@@ -163,7 +155,6 @@ def load_data():
 
 @st.cache_data
 def load_uploaded(file_bytes, sheet_name, is_odl=True):
-    """Parse an uploaded xlsm file dynamically."""
     import io
     df_raw = pd.read_excel(io.BytesIO(file_bytes), sheet_name=sheet_name, header=None, engine='openpyxl')
     fichas = [str(x).strip() for x in df_raw.iloc[8, 4:].tolist()]
@@ -193,7 +184,8 @@ except Exception:
 
 # ─── SIDEBAR ─────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("### 🌿 PMA-PSM")
+    logo_path = Path(__file__).parent / "LOGO_ODL.png"
+    st.image(str(logo_path), width=150)
     st.markdown("**HSE-G-008 · Versión 6**")
     st.markdown("---")
 
@@ -218,14 +210,16 @@ with st.sidebar:
     )
 
 # ─── HEADER ──────────────────────────────────────────────────────────────────
-st.markdown("""
-<div class="header-bar">
-  <div>
-    <h1>🌿 Guía de Aplicabilidad PMA-PSM</h1>
-    <p>Oleoducto de los Llanos Orientales · Bicentenario · HSE-G-008 · Versión 6</p>
-  </div>
-</div>
-""", unsafe_allow_html=True)
+col_logo, col_title = st.columns([1, 5])
+with col_logo:
+    st.image(str(logo_path), width=110)
+with col_title:
+    st.markdown(f"""
+    <div class="header-bar">
+      <h1>🌿 Guía de Aplicabilidad PMA-PSM</h1>
+      <p>Oleoducto de los Llanos Orientales · Bicentenario · HSE-G-008 · Versión 6</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # MÓDULO 1 — BUSCADOR
@@ -258,7 +252,6 @@ if nav == "🔎 Buscador":
         elif aplica_filter == "NO aplica":
             results = results[results['APLICA_PMA_PSM'] == False]
 
-        # Summary
         c1, c2, c3, c4 = st.columns(4)
         total_aplica = results['APLICA_PMA_PSM'].sum()
         with c1:
@@ -294,8 +287,8 @@ if nav == "🔎 Buscador":
                 </div>
                 """, unsafe_allow_html=True)
 
-            if len(results) > 60:
-                st.caption(f"_Mostrando 60 de {len(results)} resultados. Refina la búsqueda para ver más._")
+        if len(results) > 60:
+            st.caption(f"_Mostrando 60 de {len(results)} resultados. Refina la búsqueda para ver más._")
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # MÓDULO 2 — DASHBOARD
@@ -309,7 +302,6 @@ elif nav == "📊 Dashboard":
         df = active_df.copy()
         label = "ODL" if "ODL" in oleoducto else "OBC"
 
-        # KPIs
         total = len(df)
         aplica = df['APLICA_PMA_PSM'].sum()
         no_aplica = total - aplica
@@ -329,7 +321,6 @@ elif nav == "📊 Dashboard":
 
         col_a, col_b = st.columns(2)
 
-        # Chart 1: Aplicabilidad por familia
         with col_a:
             st.markdown('<div class="section-title">Aplicabilidad por Familia</div>', unsafe_allow_html=True)
             fam_stats = df.groupby('FAMILIA').agg(
@@ -359,7 +350,6 @@ elif nav == "📊 Dashboard":
             )
             st.plotly_chart(fig1, use_container_width=True)
 
-        # Chart 2: Top fichas más frecuentes
         with col_b:
             st.markdown('<div class="section-title">Fichas PMA-PSM más requeridas</div>', unsafe_allow_html=True)
             df_aplica = df[df['APLICA_PMA_PSM'] == True]
@@ -383,7 +373,6 @@ elif nav == "📊 Dashboard":
                 )
                 st.plotly_chart(fig2, use_container_width=True)
 
-        # Chart 3: Distribución de número de fichas
         st.markdown('<div class="section-title">Distribución de fichas por actividad (con aplicabilidad)</div>', unsafe_allow_html=True)
         df_num = df_aplica['NUM_FICHAS'].value_counts().reset_index()
         df_num.columns = ['Num Fichas', 'Contratos']
@@ -464,7 +453,6 @@ elif nav == "📑 Ficha de proyecto":
 
         st.markdown("---")
 
-        # Header card
         status_color = "#dcfce7" if aplica else "#f1f5f9"
         status_text = "✅ APLICA PMA-PSM" if aplica else "— NO APLICA PMA-PSM"
         status_fg = "#15803d" if aplica else "#64748b"
@@ -477,14 +465,12 @@ elif nav == "📑 Ficha de proyecto":
         </div>
         """, unsafe_allow_html=True)
 
-        # Object description
         st.markdown(f"**Objeto / Alcance:**")
         st.markdown(f"> {objeto_sel}")
 
         if aplica and fichas:
             st.markdown('<div class="section-title">📋 Fichas PMA-PSM Aplicables</div>', unsafe_allow_html=True)
 
-            # Group fichas by plan type
             pma_fichas = [f for f in fichas if any(f.startswith(p) for p in ['PMOOR','AS','ARH','ARA','ACA','BS','BPCH','BRAI','BH','BCEVF','BC','GS','PGSO','PSMA'])]
             psm_fichas = [f for f in fichas if any(f.startswith(p) for p in ['ASM','PM','BSM','SSM'])]
 
@@ -517,7 +503,6 @@ elif nav == "📑 Ficha de proyecto":
                 else:
                     st.caption("—")
 
-            # Export button
             st.markdown("---")
             st.markdown("**📥 Exportar reporte**")
 
@@ -555,7 +540,6 @@ elif nav == "📑 Ficha de proyecto":
         elif not aplica:
             st.info("Esta actividad **no requiere** medidas de manejo PMA-PSM.")
 
-        # Notes section
         st.markdown("---")
         st.markdown("**⚠️ Notas importantes**")
         st.markdown("""
