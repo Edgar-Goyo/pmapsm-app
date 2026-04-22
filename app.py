@@ -209,17 +209,14 @@ with st.sidebar:
         unsafe_allow_html=True
     )
 
+
 # ─── HEADER ──────────────────────────────────────────────────────────────────
-col_logo, col_title = st.columns([1, 5])
-with col_logo:
-    st.image(str(logo_path), width=110)
-with col_title:
-    st.markdown(f"""
-    <div class="header-bar">
-      <h1>🌿 Guía de Aplicabilidad PMA-PSM</h1>
-      <p>Oleoducto de los Llanos Orientales · Bicentenario · HSE-G-008 · Versión 6</p>
-    </div>
-    """, unsafe_allow_html=True)
+st.markdown(f"""
+<div class="header-bar">
+  <h1>🌿 Guía de Aplicabilidad PMA-PSM</h1>
+  <p>Oleoducto de los Llanos Orientales · Bicentenario · HSE-G-008 · Versión 6</p>
+</div>
+""", unsafe_allow_html=True)
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # MÓDULO 1 — BUSCADOR
